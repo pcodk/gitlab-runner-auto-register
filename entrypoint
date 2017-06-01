@@ -36,7 +36,7 @@ trap "gitlab-runner stop" SIGTERM
 
 echo "===> Running gitlab-runner register..."
 export REGISTER_NON_INTERACTIVE=true
-export RUNNER_NAME="runner-auto-runner-$HOSTNAME"
+export RUNNER_NAME="$HOSTNAME"
 gitlab-runner register --executor=docker --docker-image ubuntu:16.04
 
 echo "===> Running gitlab-runner run..."
