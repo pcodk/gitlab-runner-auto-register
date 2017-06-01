@@ -38,6 +38,10 @@ echo "===> Running gitlab-runner register..."
 export REGISTER_NON_INTERACTIVE=true
 export RUNNER_NAME="$HOSTNAME"
 gitlab-runner register --executor=docker --docker-image ubuntu:16.04
+if [ $? -gt 0 ]; then
+  echo "===> ERROR: Registration failed!"
+  exit 1
+fi
 
 echo "===> Running gitlab-runner run..."
 gitlab-runner run
