@@ -10,6 +10,10 @@ if [ -z "$REGISTRATION_TOKEN" ]; then
   exit 1
 fi
 
+if [ "$PRIVILIGED_MODE" -ne "true" ]; then
+  PRIVILIGED_MODE="false"
+fi
+
 # gitlab-ci-multi-runner data directory
 DATA_DIR="/etc/gitlab-runner"
 CONFIG_FILE=${CONFIG_FILE:-$DATA_DIR/config.toml}
@@ -37,11 +41,14 @@ trap "gitlab-runner stop" SIGTERM
 echo "===> Running gitlab-runner register..."
 export REGISTER_NON_INTERACTIVE=true
 export RUNNER_NAME="$HOSTNAME"
-gitlab-runner register --executor=docker --docker-image docker:latest --docker-volumes /var/run/docker.sock:/var/run/docker.sock
+gitlab-runner register --executor=docker --docker-image docker:latest  --docker-privileged=$PRIVILIGED_MODE --docker-volumes /var/run/docker.sock:/var/run/docker.sock
 if [ $? -gt 0 ]; then
   echo "===> ERROR: Registration failed!"
   exit 1
 fi
+
+echo "===> Current version of gitlab-runner:"
+gitlab-runner --version
 
 echo "===> Running gitlab-runner run..."
 gitlab-runner run
