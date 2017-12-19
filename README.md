@@ -10,7 +10,7 @@ Heavily based on: https://github.com/ayufan/gitlab-ci-multi-runner/tree/master/d
 
 ## Run
 
-    docker run -e "CI_SERVER_URL=https://gitlab.example.com/" -e "REGISTRATION_TOKEN=XXXXXXXXXXXXXX" gitlab-runner-auto-register 
+    docker run -e "CI_SERVER_URL=https://gitlab.example.com/" -e "REGISTRATION_TOKEN=XXXXXXXXXXXXXX" -e PRIVILIGED_MODE={true|false} gitlab-runner-auto-register 
 
 ## Environment Variables
 
